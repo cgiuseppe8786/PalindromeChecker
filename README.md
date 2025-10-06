@@ -1,6 +1,6 @@
 # Palindrome Checker
 
-Questo progetto è stato realizzato come parte del percorso **"JavaScript Algorithms and Data Structures"** di **freeCodeCamp**.
+Questo progetto è stato realizzato come parte del percorso **"JavaScript Algorithms and Data Structures"** di [freeCodeCamp](https://www.freecodecamp.org/).
 
 L’obiettivo era creare un’applicazione che verifica se una parola o frase è un **palindromo**, ignorando punteggiatura, spazi e maiuscole/minuscole.  
 L’interfaccia è stata sviluppata in **HTML, CSS e JavaScript puro**, rispettando i requisiti di accessibilità e i test ufficiali del certificato.
