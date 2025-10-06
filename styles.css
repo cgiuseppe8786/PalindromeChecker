@@ -1,0 +1,321 @@
+/* =========================================================
+   DESIGN TOKENS (light/dark via data-theme)
+   Palette, ombre e variabili di base per garantire coerenza
+   visiva e facilità di manutenzione tra i temi.
+   ========================================================= */
+:root {
+  --bg: #f6f7f9;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --card: rgba(255, 255, 255, 0.85);
+  --border: #e5e7eb;
+  --ring: #1f6feb;
+  --btn-bg: #1f6feb;
+  --btn-bg-hover: #155edc;
+  --shadow: 0 10px 30px rgba(4, 20, 40, 0.12);
+  --glass-blur: saturate(180%) blur(8px);
+  --chip-bg: #eef2ff;
+  --chip-text: #3730a3;
+}
+
+/* Tema scuro: override cromatici attivati da body[data-theme="dark"] */
+body[data-theme="dark"] {
+  --bg: #0d1117;
+  --text: #e5e7eb;
+  --muted: #94a3b8;
+  --card: rgba(22, 27, 34, 0.7);
+  --border: #1f2937;
+  --ring: #60a5fa;
+  --btn-bg: #2563eb;
+  --btn-bg-hover: #1d4ed8;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  --chip-bg: #111827;
+  --chip-text: #c7d2fe;
+}
+
+/* =========================================================
+   BASE / RESET
+   Normalizza il box model, imposta tipografia e sfondo.
+   Gradiente leggero per profondità senza penalizzare leggibilità.
+   ========================================================= */
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--text);
+  background: radial-gradient(
+      1200px 600px at 10% -10%,
+      rgba(99, 102, 241, 0.18),
+      transparent 60%
+    ),
+    radial-gradient(
+      800px 500px at 110% 10%,
+      rgba(56, 189, 248, 0.18),
+      transparent 60%
+    ),
+    var(--bg);
+  transition: background-color 0.25s ease, color 0.25s ease; /* transizioni morbide tra temi */
+}
+
+/* =========================================================
+   ICONA CAMBIO TEMA
+   Interattiva ma non “button-like”: nessun bordo/sfondo/ombra,
+   restando accessibile e con feedback hover discreto.
+   ========================================================= */
+.theme-icon {
+  position: fixed;
+  top: 14px;
+  right: 18px;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+  color: var(--text);
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  transition: transform 0.1s ease, opacity 0.2s ease;
+  opacity: 0.75;
+}
+.theme-icon:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+.theme-icon:focus {
+  outline: none; /* focus gestito a livello app; qui evitiamo alone predefinito */
+}
+
+/* =========================================================
+   LAYOUT
+   Contenuto centrato verticalmente/orizzontalmente con ritmo
+   verticale uniforme tra le sezioni principali.
+   ========================================================= */
+.container {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* centratura verticale */
+  padding: 2rem 1rem; /* spazio contenuto per ridurre “vuoti” */
+  gap: 1rem; /* spaziatura coerente tra header/card/footer */
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.title {
+  margin: 0;
+  font-size: clamp(1.6rem, 2.8vw, 2rem);
+  letter-spacing: 0.2px;
+}
+
+/* =========================================================
+   BANNER INFORMATIVO
+   Evidenzia la definizione con un accento cromatico coerente.
+   Testo centrato per leggibilità, ombra e blur per effetto “glass”.
+   ========================================================= */
+.banner {
+  background: color-mix(in srgb, var(--ring) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ring) 25%, transparent);
+  border-radius: 12px;
+  padding: 0.8rem 1.1rem;
+  margin: 0.5rem auto 0.8rem; /* margine ridotto per avvicinare all’input */
+  width: min(720px, 92vw);
+  box-shadow: var(--shadow);
+  backdrop-filter: var(--glass-blur);
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.45;
+  text-align: center;
+}
+.banner strong {
+  color: var(--ring);
+}
+.banner em {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--ring);
+}
+
+/* Nota informativa sotto la card: tono secondario e centrata */
+.info {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-top: 0.6rem;
+}
+
+/* =========================================================
+   CARD
+   Pannello principale con effetto vetro, bordo sottile e ombra.
+   Padding compresso per equilibrio visivo con il banner.
+   ========================================================= */
+.card {
+  width: min(720px, 92vw);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  backdrop-filter: var(--glass-blur);
+  padding: 1rem 1.25rem;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+/* =========================================================
+   CONTROLLI (INPUT + BUTTON)
+   Alti contrasti e focus ben visibile. Animazioni sottili per
+   non distrarre e garantire buon feedback.
+   ========================================================= */
+.row {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+/* Campo di testo: trasparente per integrare la card, focus “ring” coerente */
+.input {
+  flex: 1;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  font-size: 1rem;
+  background: transparent;
+  color: var(--text);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.input::placeholder {
+  color: color-mix(in srgb, var(--muted) 80%, transparent);
+}
+.input:focus {
+  outline: none;
+  border-color: var(--ring);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--ring) 25%, transparent);
+  background: color-mix(in srgb, var(--card) 65%, transparent);
+}
+
+/* Pulsante primario: colore brand, hover/active/keyboard states */
+.btn {
+  padding: 0.8rem 1rem;
+  border: 0;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  background: var(--btn-bg);
+  color: white;
+  transition: background 0.2s ease, transform 0.06s ease;
+}
+.btn:hover {
+  background: var(--btn-bg-hover);
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn:focus {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* =========================================================
+   RISULTATO
+   Spazio minimo per evitare “salti” del layout quando vuoto.
+   ========================================================= */
+.result {
+  margin-top: 1rem;
+  font-size: 1.05rem;
+  min-height: 1.6em;
+  text-align: center;
+  transition: color 0.25s ease, transform 0.15s ease;
+}
+
+.result.is-palindrome {
+  color: #16a34a; /* verde - success */
+  font-weight: 600;
+}
+
+.result.not-palindrome {
+  color: #dc2626; /* rosso - error */
+  font-weight: 600;
+}
+
+.result strong {
+  font-weight: 700;
+}
+
+.result.is-palindrome::before {
+  content: "✅";
+  margin-right: 6px;
+}
+
+.result.not-palindrome::before {
+  content: "❌";
+  margin-right: 6px;
+}
+
+/* =========================================================
+   ESEMPI RAPIDI (DETAILS)
+   Disclosure progressivo, griglia fluida e “chip” cliccabili
+   che compilano l’input.
+   ========================================================= */
+.tips {
+  margin-top: 0.75rem;
+  border-top: 1px dashed var(--border);
+  padding-top: 0.75rem;
+}
+.tips > summary {
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+.chip {
+  border: 1px solid var(--border);
+  background: var(--chip-bg);
+  color: var(--chip-text);
+  border-radius: 999px;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.08s ease, filter 0.2s ease, background 0.2s ease;
+}
+.chip:hover {
+  filter: brightness(0.98);
+}
+.chip:active {
+  transform: translateY(1px);
+}
+.chip:focus {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* =========================================================
+   FOOTER / BADGE
+   Piccolo richiamo informativo in tono neutro, coerente con la card.
+   ========================================================= */
+.footer {
+  margin-top: 1rem;
+}
+.badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.25rem 0.6rem;
+  background: color-mix(in srgb, var(--ring) 12%, transparent);
+  backdrop-filter: var(--glass-blur);
+}

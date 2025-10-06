@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Impostazione della viewport per garantire un comportamento responsive coerente sui dispositivi mobili -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Palindrome Checker</title>
+
+    <!-- Collegamento al foglio di stile principale -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <script src="script.js" defer></script>
+  <body>
+    <!--
+    Controllo per il cambio tema (chiaro/scuro).
+    Implementato come <span> per evitare l’aspetto di un pulsante, ma con supporto alla tastiera (tabindex).
+    Gli attributi ARIA rendono il controllo accessibile alle tecnologie assistive.
+  -->
+    <span
+      id="theme-toggle"
+      class="theme-icon"
+      role="button"
+      tabindex="0"
+      aria-label="Cambia tema"
+      title="Cambia tema"
+      >🌙</span
+    >
+
+    <!--
+    Contenuto principale della pagina.
+    <main> fornisce un punto di riferimento semantico per i lettori di schermo.
+    La classe .container gestisce la centratura verticale e orizzontale dei contenuti.
+  -->
+    <main class="container">
+      <!--
+      Intestazione della pagina:
+      contiene il titolo principale e un banner informativo che spiega cos’è un palindromo.
+      Il banner utilizza role="note" per essere annunciato in modo discreto dai lettori di schermo.
+    -->
+      <header class="header">
+        <h1 class="title">Palindrome Checker</h1>
+
+        <!-- Banner informativo con definizione e alcuni esempi semplici -->
+        <div class="banner" role="note" aria-live="polite">
+          <p>
+            A <strong>palindrome</strong> is a word or phrase that reads the
+            same forward and backward. Common examples: <em>anna</em>,
+            <em>radar</em>, <em>racecar</em>, <em>never odd or even</em>.
+          </p>
+        </div>
+      </header>
+
+      <!--
+      Sezione interattiva principale:
+      contiene il campo di input, il pulsante di controllo e l’area del risultato.
+      Gli id (#text-input, #check-btn, #result) sono obbligatori per la verifica dei test FreeCodeCamp.
+    -->
+      <section class="card" aria-labelledby="form-title">
+        <!--
+        Riga con campo di input e pulsante:
+        - l’utente inserisce un testo o una frase da verificare;
+        - il pulsante “Check” attiva la funzione di controllo.
+      -->
+        <div class="row">
+          <input
+            id="text-input"
+            type="text"
+            class="input"
+            placeholder="Try: A man, a plan, a canal. Panama"
+            aria-label="Testo da verificare"
+          />
+          <button id="check-btn" type="button" class="btn">Check</button>
+        </div>
+
+        <!--
+        Area del risultato:
+        il contenuto di questo paragrafo viene aggiornato dinamicamente in base al risultato del controllo.
+        aria-live="polite" assicura che i lettori di schermo annuncino il testo senza interrompere la lettura.
+      -->
+        <p id="result" class="result" aria-live="polite"></p>
+
+        <!--
+        Esempi rapidi:
+        l’elemento <details> consente di espandere o comprimere un elenco di esempi predefiniti.
+        Ogni “chip” è un pulsante che inserisce automaticamente un esempio nel campo di input.
+      -->
+        <details class="tips">
+          <summary>Quick examples</summary>
+          <div class="tips-grid">
+            <!-- Palindromi semplici -->
+            <button class="chip" type="button" data-sample="level">
+              level
+            </button>
+            <button class="chip" type="button" data-sample="madam">
+              madam
+            </button>
+            <button class="chip" type="button" data-sample="racecar">
+              racecar
+            </button>
+            <button class="chip" type="button" data-sample="kayak">
+              kayak
+            </button>
+            <button class="chip" type="button" data-sample="rotor">
+              rotor
+            </button>
+            <button class="chip" type="button" data-sample="race car">
+              race car
+            </button>
+            <button class="chip" type="button" data-sample="never odd or even">
+              never odd or even
+            </button>
+
+            <!-- Non palindromi -->
+            <button class="chip" type="button" data-sample="hello">
+              hello
+            </button>
+            <button class="chip" type="button" data-sample="world">
+              world
+            </button>
+            <button class="chip" type="button" data-sample="banana">
+              banana
+            </button>
+            <button class="chip" type="button" data-sample="openai">
+              openai
+            </button>
+          </div>
+        </details>
+      </section>
+
+      <!--
+      Footer informativo:
+      riepiloga la regola logica applicata dal programma (ignora punteggiatura, spazi e maiuscole/minuscole).
+      Inserito sotto la card per completare visivamente la struttura verticale.
+    -->
+      <footer class="footer">
+        <p class="badge">Ignore punctuation, spaces, and case.</p>
+      </footer>
+    </main>
+  </body>
+</html>
